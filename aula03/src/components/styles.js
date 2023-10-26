@@ -3,8 +3,7 @@ import { dark_theme } from "./themes/dark"
 import { light_theme } from "./themes/light"
 import React from "react";
 
-var dark_theme_on = localStorage.getItem('dark_theme_on');
-console.log(dark_theme_on)
+var dark_theme_on = localStorage.getItem('dark_theme_on') == "true" ? true : false;
 
 export function styleConcat(baseStyle, newStyle) {
     var concatenatedStyles = {};
@@ -19,10 +18,14 @@ export function styleConcat(baseStyle, newStyle) {
 
 function stylesConcat(baseStyle, newStyle) {
     var concatenatedStyles = {};
+
+    for (const key in baseStyle) {
+        concatenatedStyles[key] = baseStyle[key];
+    }
     
     for (const keybase in baseStyle) {
         for (const keynew in newStyle) {
-            if(!baseStyle[keynew])
+            if(baseStyle[keynew] == undefined)
                 concatenatedStyles[keynew] = newStyle[keynew]
             else
                 concatenatedStyles[keynew] = styleConcat(baseStyle[keynew], newStyle[keynew])
@@ -48,7 +51,20 @@ const stylesBase = StyleSheet.create({
     subValue: {
         fontSize: "1em",
         opacity: ".5",
-    }
+    },
+
+    displayValue: {
+        fontSize: "2em",
+    },
+
+    display_button: {
+        width: "33%"
+    },
+
+    display_button_text: {
+        fontSize: "1.5em",
+        textAlign: "center",
+    },
 })
 
 export var styles = stylesConcat(stylesBase, dark_theme_on ? dark_theme : light_theme)

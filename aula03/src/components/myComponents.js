@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { View as OriginView, Text as OriginText, TouchableOpacity } from "react-native";
+import { View as OriginView, Text as OriginText, TouchableOpacity, Pressable } from "react-native";
 import { styles, styleConcat } from './styles'
 
 export function View(props) {
@@ -32,5 +32,38 @@ export function FAIcon(props) {
                 size={props.size || 0}
             />
         </TouchableOpacity>
+    );
+}
+
+export function Button(props) {
+    const style = styleConcat(styles.button, props.style)
+    if(props.clickOpacity == "true")
+        return (
+            <TouchableOpacity
+                onPress={props.onPress}
+                style={style}>
+                    {props.children}
+            </TouchableOpacity>
+        );
+    else
+        return (
+            <Pressable
+                onPress={props.onPress}
+                style={style}>
+                    {props.children}
+            </Pressable>
+        );
+}
+
+export function Keyboard(props) {
+    return (
+        <Button
+            onPress={() => props.getKey(props.value)}
+            style={props.style}
+            clickOpacity="true">
+            <Text style={props.textStyle}>
+                {props.value}
+            </Text>
+        </Button>
     );
 }
