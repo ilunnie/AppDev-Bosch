@@ -4,8 +4,13 @@ import { View, Text, Display, FAIcon, Button, Keyboard } from "../components/myC
 import { faMoon } from '@fortawesome/free-solid-svg-icons'
 
 export default function Calculadora(props) {
-    const [subValue, setSubValue] = useState(" ")
-    const [value, setValue] = useState("")
+    const [subValue, setSubValue] = useState(localStorage.getItem('subValue') || " ")
+    const [value, setValue] = useState(localStorage.getItem('value') || "")
+
+    function saveValues(value, subValue) {
+        localStorage.setItem('subValue', subValue);
+        localStorage.setItem('value', value);
+    }
 
     function getKey(key) {
         setSubValue(" ");
@@ -15,23 +20,27 @@ export default function Calculadora(props) {
                 var block = ".,+-*/%^"
                 if(char != "" && !block.includes(char))
                     setValue(value + ",")
+                saveValues(value, subValue)
                 break;
 
             case "⇦":
                 setValue(value.slice(0, -1))
+                saveValues(value, subValue)
                 break;
 
             case "=":
-                setSubValue(value)
+                setSubValue(value + " =")
                 var keys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ",", "÷", "×", "\\+", "-"]
                 var vkey = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/", "*", "+", "-"]
-                for(let i = 0; i < keys.length; i++) {
-                    setValue(String(value.replace(new RegExp(keys[i], "g"), vkey[i])))
-                    console.log(value)
-                }
-                console.log(value)
-                var result = eval(value)
+                var result = "";
+                for(let char = 0; char < value.length; char++) {
+                    for(let i = 0; i < keys.length; i++)
+                        if(value[char] == keys[i])
+                            result += vkey[i]
+                };
+                var result = eval(result)
                 setValue(String(result))
+                saveValues(result, value + " =")
                 break;
         
             default:
