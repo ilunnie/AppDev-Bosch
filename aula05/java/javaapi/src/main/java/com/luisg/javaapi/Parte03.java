@@ -1,23 +1,23 @@
 package com.luisg.javaapi;
 
-import java.util.Scanner;
-
 public class Parte03 {
     public static void run() {
-        try (Scanner scan = new Scanner(System.in)) {
-            System.out.println("Digite o texto: \n> ");
-            String text = scan.nextLine();
+        System.out.print("Digite o texto: \n> ");
+        String text = Input.nextLine();
 
-            System.out.println("O meio do texto é: " + MiddleOne(text));
-        }
+        System.out.println("O meio do texto é: " + MiddleOne(text));
     }
 
     public static String MiddleOne(String text) {
+        System.out.println(text);
         text = text.replace("\n", " ");
         text = text.replace("  ", " ");
 
-        System.out.println(text.split(" "));
+        String[] textArray = text.split(" ");
 
-        return text;
+        if(textArray.length % 2 == 0)
+            return textArray[textArray.length / 2 - 1] + " " + textArray[textArray.length / 2];
+
+        return textArray[(textArray.length - 1) / 2];
     }
 }

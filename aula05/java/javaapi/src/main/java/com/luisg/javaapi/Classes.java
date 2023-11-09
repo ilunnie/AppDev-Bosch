@@ -6,6 +6,19 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
+
+class Input {
+    private static Scanner scanner = new Scanner(System.in, "UTF-8");
+
+    public static String nextLine() {
+        return scanner.nextLine();
+    }
+
+    public static void close() {
+        scanner.close();
+    }
+}
 
 class Pessoa {
 	@Getter @Setter(AccessLevel.PRIVATE) private String nome;

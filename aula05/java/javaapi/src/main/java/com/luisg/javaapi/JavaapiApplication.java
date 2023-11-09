@@ -10,8 +10,7 @@ public class JavaapiApplication {
 		Parte01.run();
 		Parte02.run();
 		Parte03.run();
+
+		Input.close();
 	}
-
-	
-
 }

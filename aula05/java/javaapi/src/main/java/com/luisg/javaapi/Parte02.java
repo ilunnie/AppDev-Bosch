@@ -3,8 +3,6 @@ package com.luisg.javaapi;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Parte02 {
     
@@ -36,9 +34,8 @@ public class Parte02 {
         System.out.println(usuario02);
         System.out.println();
 
-        Funcionario[] funcionariosVetor = new Funcionario[2];
-        funcionariosVetor[0] = funcionario01;
-        funcionariosVetor[1] = funcionario02;
+        Funcionario[] funcionariosVetor = new Funcionario[]
+            {funcionario01, funcionario02};
         System.out.println(funcionariosVetor);
         System.out.println();
 
@@ -84,19 +81,18 @@ public class Parte02 {
 
     public static int InMax() {
         int max = Integer.MIN_VALUE;
+        String input = "\n";
 
-        try (Scanner scan = new Scanner(System.in)) {
-            String input = "\n";
-
-            System.out.println("Digite números:");
+        System.out.println("Digite números:");
+        try {
             while (input != "") {
                 System.out.print("> ");
-                input = scan.nextLine();
+                input = Input.nextLine();
 
                 if (Integer.parseInt(input) > max)
                     max = Integer.parseInt(input);
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             System.out.println("Finalizando leitura...");
         }
 
