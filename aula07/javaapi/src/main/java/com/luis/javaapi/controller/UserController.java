@@ -1,12 +1,14 @@
 package com.luis.javaapi.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,12 @@ public class UserController {
     public List<UserModel> getAllUser() {
         List<UserModel> listRes = userService.findAll();
         return listRes;
+    }
+
+    @GetMapping("/?id={id}")
+    public Optional<UserModel> findById(@PathVariable String id)
+    {
+        return userService.findById(id);
     }
 
     @GetMapping("/{name}")
@@ -51,5 +59,10 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable String id) {
         userService.delete(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public void updateUser(@RequestBody UserModel newInfos, @PathVariable String id) {
+        userService.update((String) id, (String) newInfos.getName(), (short) newInfos.getAge());
     }
 }
